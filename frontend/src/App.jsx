@@ -1,4 +1,5 @@
 import Navbar from "./Landing_page/CommonComponents/Navbar" ;
+import Footer from "./Landing_page/CommonComponents/Footer";
 
 function App() {
   
@@ -6,6 +7,7 @@ function App() {
   return (
     <>
      <Navbar/>
+     <Footer/>
     </>
   )  
 }
