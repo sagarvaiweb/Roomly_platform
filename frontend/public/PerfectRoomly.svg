@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 180" preserveAspectRatio="xMinYMid meet">
+
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="teal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#39d3c0"></stop>
+      <stop offset="100%" stop-color="#1aa69a"></stop>
+    </linearGradient>
+
+    <linearGradient id="orange" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffc107"></stop>
+      <stop offset="100%" stop-color="#ff7a00"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- ICON -->
+  <g transform="translate(30,15) scale(1)">
+    <!-- Roof -->
+    <path d="M40 55 L90 20 L140 55" fill="none" stroke="#1aa69a" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"></path>
+
+    <!-- House -->
+    <rect x="58" y="55" width="64" height="54" rx="10" fill="url(#teal)"></rect>
+
+    <!-- Window -->
+    <rect x="78" y="72" width="10" height="10" fill="#fff"></rect>
+    <rect x="92" y="72" width="10" height="10" fill="#fff"></rect>
+    <rect x="78" y="86" width="10" height="10" fill="#fff"></rect>
+    <rect x="92" y="86" width="10" height="10" fill="#fff"></rect>
+
+    <!-- Shield -->
+    <path d="
+      M90 60
+      C45 72 48 130 90 150
+      C132 130 135 72 90 60 Z" fill="url(#orange)"></path>
+
+    <!-- Base shadow -->
+    <path d="M45 155 Q90 168 135 155" fill="none" stroke="#1aa69a" stroke-width="6" stroke-linecap="round"></path>
+  </g>
+
+  <!-- TEXT -->
+  <text x="210" y="118" font-size="72" font-weight="700" font-family="Poppins, Segoe UI, Arial, sans-serif">
+    <tspan fill="#1aa69a">Room</tspan>
+    <tspan fill="#ff7a00">ly</tspan>
+  </text>
+</svg>
