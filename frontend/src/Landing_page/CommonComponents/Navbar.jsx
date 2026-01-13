@@ -8,7 +8,7 @@ function Navbar() {
 
   return (
     <>
-  <nav className="navbar  navbar-expand-lg bg-body-tertiary fixed-top ">
+  <nav className="navbar  navbar-expand-lg bg-body-tertiary fixed-top border-bottom">
   <div className="container-fluid">
     <Link className="navbar-brand h-100" to="/">
       <img style={{width:"auto" , height:"70px"}} src="/PerfectRoomly.svg" alt="Navbar_image" />
