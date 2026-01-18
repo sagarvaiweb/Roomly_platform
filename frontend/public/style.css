@@ -41,3 +41,69 @@
     height: 400px;
   }
 }
+
+
+
+/* css for showPage */
+
+.showPage_div{
+  margin-top: 8rem;
+}
+.image_div{
+  height: 300px;
+  width:370px;
+  
+}
+.show_image{
+  width:100%;
+  height: 100%;
+  object-fit: cover;
+}
+.btn_div{
+  width:360px;
+  display:flex;
+  justify-content: space-between;
+}
+.update_btn{
+  background-color:green;
+  color:white ;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  text-decoration: none;
+}
+.update_btn:hover{
+  background-color: rgb(64, 152, 64);
+  color:white; 
+}
+
+.delete_btn{
+  background-color: red;
+  color:white ;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  text-decoration: none;
+}
+.delete_btn:hover{
+  background-color: rgb(166, 41, 41);
+  color:white;
+}
+.book_btn{
+  background-color:blue;
+  color:white ;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  text-decoration: none;
+}
+.book_btn:hover{
+  background-color: rgb(77, 69, 149);
+  color:white;
+}
+
+@media(min-width:756px){
+  .image_div{
+    width:500px ;
+  }
+}
