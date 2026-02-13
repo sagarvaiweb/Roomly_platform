@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom';
 import { allListings } from '../../Data/dummy';
+import Button from '../CommonComponents/CommonButton';
 
 
 function ShowPage() {
@@ -25,9 +26,9 @@ function ShowPage() {
             </div>
 
             <div className="btn_div mb-5 mt-5">
-                <Link to={`/listings/${listing._id}/edit`} ><button className='update_btn'>Update</button></Link>
-                <button className='book_btn'>Book now</button>
-                <button type='submit' className='delete_btn'>Delete</button> 
+                <Link to={`/listings/${listing._id}/edit`} ><Button clsName="update_btn" btnText="Update" /></Link>
+                <Button clsName="book_btn" btnText="Book now" />
+                <Button clsName="delete_btn" btnText="Delete" />
             </div>
         </div>
     </> );
