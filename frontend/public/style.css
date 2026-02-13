@@ -107,3 +107,188 @@
     width:500px ;
   }
 }
+
+
+
+/* new one  */
+/* 1. RESET & BASE */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Allow normal scrolling on the page */
+html, body {
+  width: 100%;
+  min-height: 100%;
+  /* This prevents the horizontal scrollbar caused by blurred blobs */
+  overflow-x: hidden; 
+  background: #f8fafc;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.roomly_glass_page {
+  width: 100%;
+  min-height: 100vh;
+  margin-top: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 40px 20px; /* Space for the form to breathe */
+}
+
+/* 2. BACKGROUND BLOBS (FIXED OVERFLOW) */
+.blob { 
+  position: absolute; 
+  filter: blur(80px); 
+  z-index: 0; 
+  border-radius: 50%; 
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Changed from viewport units to pixels to prevent 'stretching' the page */
+.blob_blue { width: 400px; height: 400px; background: #3b82f6; top: -100px; left: -50px; }
+.blob_teal { width: 350px; height: 350px; background: #2dd4bf; top: 10%; right: -50px; }
+.blob_yellow { width: 300px; height: 300px; background: #fbbf24; bottom: -50px; left: 10%; }
+
+/* 3. THE GLASS FORM CARD */
+.roomy_glass_form {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 900px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 30px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+}
+
+/* 4. LAYOUT COMPONENTS */
+.form_layout { 
+  display: flex; 
+  gap: 40px; 
+  align-items: flex-start; 
+}
+
+.form_inputs_side { flex: 1; }
+
+.glass_title { font-size: 2rem; color: #0f172a; margin: 0 0 8px 0; }
+.glass_sub { color: #64748b; margin-bottom: 24px; font-size: 0.95rem; }
+
+/* FIELDS */
+.glass_field { margin-bottom: 18px; display: flex; flex-direction: column; }
+.glass_field label { font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 6px; }
+
+.glass_field input, .glass_field textarea {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 15px;
+  outline: none;
+  width: 100%;
+}
+
+/* FOOTER ROW ALIGNMENT */
+.glass_row_aligned {
+  display: flex;
+  gap: 15px;
+  align-items: flex-end;
+}
+
+.flex_2 { flex: 2; }
+.flex_3 { flex: 3; }
+
+.price_input_group {
+  display: flex;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+}
+
+.currency_tag {
+  background: rgba(0, 0, 0, 0.04);
+  padding: 12px;
+  font-weight: bold;
+  color: #64748b;
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.price_input_group input { border: none !important; width: 100%; background: transparent; }
+
+/* 5. PREVIEW SECTION */
+.form_preview_side { 
+  flex: 0.4; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+}
+
+.glass_preview_circle {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  border: 4px solid white;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.glass_preview_circle img { width: 100%; height: 100%; object-fit: cover; }
+
+.preview_label_badge { 
+  margin-top: 15px; 
+  font-size: 12px; 
+  font-weight: 700; 
+  color: #94a3b8; 
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* 6. SUBMIT BUTTON */
+.glass_submit_btn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(90deg, #4f46e5, #0ea5e9);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.glass_submit_btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+/* 7. MOBILE RESPONSIVENESS (NATURAL SCROLL) */
+@media (max-width: 850px) {
+  .form_layout {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .glass_row_aligned {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .roomy_glass_form {
+    padding: 25px 20px;
+    margin-bottom: 20px; /* Ensure bottom space when scrolling */
+  }
+
+  .glass_preview_circle { width: 180px; height: 180px; }
+  .glass_title { font-size: 1.6rem; text-align: center; }
+}
