@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function Footer() {
     return ( <>
 
-<footer className="bg-primary text-white pt-5 pb-3 mt-5">
+<footer className="bg-primary text-white pt-5 pb-3">
   <div className="container">
     <div className="row gy-4 mt-1">
 

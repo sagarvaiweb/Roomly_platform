@@ -44,6 +44,126 @@
 
 
 
+/* css for signupPage */
+
+
+
+/* Background wrapper to center the card */
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; 
+  background-color: #e0e5ec; 
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* The Card */
+.auth-card {
+  background-color: #e0e5ec;
+  padding: 40px;
+  border-radius: 40px;
+  box-shadow: 20px 20px 60px #bec3c9, -20px -20px 60px #ffffff;
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+  margin-top: 8rem;
+  margin-bottom: 2rem;
+}
+
+.auth-title {
+  color: #333;
+  font-weight: 700;
+  margin-bottom: 30px;
+  font-size: 28px;
+}
+
+/* Neumorphic Input Styling */
+.neumorphic-input {
+  display: flex;
+  align-items: center;
+  background-color: #e0e5ec;
+  border-radius: 30px;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  /* This creates the 'sunken' effect */
+  box-shadow: inset 6px 6px 12px #bec3c9, inset -6px -6px 12px #ffffff;
+}
+
+.neumorphic-input i {
+  color: #777;
+  margin-right: 15px;
+  font-size: 1.1rem;
+}
+
+.neumorphic-input input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  color: #555;
+  font-size: 16px;
+  padding: 8px 0;
+}
+
+.eye-toggle {
+  cursor: pointer;
+  margin-left: 10px;
+  transition: 0.3s;
+}
+
+/* Blue Submit Button */
+.auth-btn {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 30px;
+  background: #00aeff;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0px 8px 15px rgba(0, 174, 255, 0.3);
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.auth-btn:hover {
+  background: #0098e0;
+  transform: translateY(-2px);
+}
+
+/* Footer Text */
+.terms-text {
+  font-size: 12px;
+  color: #777;
+  margin-top: 20px;
+  line-height: 1.5;
+}
+
+.terms-text a {
+  color: #00aeff;
+  text-decoration: none;
+}
+
+.login-footer {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #333;
+}
+
+.login-link {
+  color: #00aeff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+
+
+
 /* css for showPage */
 
 .showPage_div{
@@ -292,6 +412,9 @@ html, body {
   .glass_preview_circle { width: 180px; height: 180px; }
   .glass_title { font-size: 1.6rem; text-align: center; }
 }
+
+
+
 
 
 
