@@ -9,13 +9,13 @@ import CreateListingPage from "./Landing_page/CreateListing/CreateListingPage";
 import UpdateListing from "./Landing_page/Update/UpdateListing";
 import SignUpPage from "./Landing_page/SignUp/SignUpPage";
 import LoginPage from "./Landing_page/Login/LoginPage";
-Route
+import ScrollToTop from "./GloComponents/ScrollToTop";
 function App() {
   
 
   return (
     <>
-    
+    <ScrollToTop/>
      <Routes>
      <Route element={<UserLayout/>}> 
      <Route path="/"  element={<HomePage/>}/>
