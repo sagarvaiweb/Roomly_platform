@@ -2,7 +2,7 @@ const Listing = require("../Models/ListingModel") ;
 const ExpressError = require("../utils/ExpressError");
 
 module.exports.index =  async (req , res)=>{
-    let allListings = await Listing.find({ }) ;
+    const allListings = await Listing.find({ }) ;
     if(allListings.length === 0){
         throw new ExpressError(404 , "listings not found in database !") ;
     }
@@ -15,7 +15,7 @@ module.exports.index =  async (req , res)=>{
 
 module.exports.showListing = async(req ,res)=>{
      let {id} = req.params ;
-     let listing = await Listing.findById(id) ;
+     const listing = await Listing.findById(id) ;
 
      if(!listing){
         throw new ExpressError(404 , "listing not found in database !") ;
@@ -25,4 +25,13 @@ module.exports.showListing = async(req ,res)=>{
         success: true ,
         data : listing
      }) ;
+} ;
+
+module.exports.createListing = async(req , res)=>{
+    const newListing = new Listing(req.body.listing) ;
+    await newListing.save() ;
+    res.status(200).json({
+        success:true ,
+        message:"listing created successfully"
+    }) ;
 } ;

@@ -11,5 +11,8 @@ router.get("/" , wrapAsync( listingControllers.index ) ) ;
 // showListing route
 router.get("/:id" , wrapAsync( listingControllers.showListing )) ;
 
+// createListing route
+router.post("/create" , wrapAsync( listingControllers.createListing )) ;
+
 module.exports = router ;
    
