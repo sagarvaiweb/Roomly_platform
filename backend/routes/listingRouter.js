@@ -8,5 +8,8 @@ const listingControllers = require("../controllers/listingController") ;
 // index route
 router.get("/" , wrapAsync( listingControllers.index ) ) ;
 
+// showListing route
+router.get("/:id" , wrapAsync( listingControllers.showListing )) ;
+
 module.exports = router ;
    
