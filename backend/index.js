@@ -5,6 +5,8 @@ require('dotenv').config() ;
 const express = require("express") ;
 const mongoose = require("mongoose") ;
 const cors = require("cors") ;
+const ExpressError = require("./utils/ExpressError") ;
+const listingRouter = require("./routes/listingRouter") ;
 
 // app initialization and variables
 const app = express() ;
@@ -17,6 +19,22 @@ app.use(cors()) ;
 app.use(express.json()) ;
 app.use(express.urlencoded({extended:true })) ;
 
+// Routes
+app.use("/listings" , listingRouter) ;
+
+// 404 handler
+app.use((req , res , next)=>{
+    next(new ExpressError(404 , "Page not found:")) ;
+})
+
+// Error handling middleware
+app.use((err , req , res , next)=>{
+    let {statusCode = 500 , message = "something went wrong!"} = err ;
+    res.status(statusCode).json({
+        success : false ,
+        message : message 
+    }) ;
+})
 
 // mongodb connection and server start
 mongoose.connect(MONGO_URL).then(()=>{
@@ -26,5 +44,5 @@ mongoose.connect(MONGO_URL).then(()=>{
     })
 })
 .catch((err)=>{
-    console.error("mongodb connection is failed , err") ;
+    console.error("mongodb connection is failed" ,err) ;
 })
