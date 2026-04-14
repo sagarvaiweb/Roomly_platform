@@ -17,5 +17,8 @@ router.post("/create" , wrapAsync( listingControllers.createListing )) ;
 // updateListing route
 router.put("/:id/update" , wrapAsync( listingControllers.updateListing )) ;
 
+// destroyListing route
+router.delete("/:id" , wrapAsync( listingControllers.destroyListing )) ;
+
 module.exports = router ;
    

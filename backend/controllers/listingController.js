@@ -59,3 +59,13 @@ module.exports.updateListing = async(req , res)=>{
     }) ;
 
 } ;
+
+module.exports.destroyListing = async(req , res)=>{
+    let {id} = req.params ;
+    const listing = await Listing.findByIdAndDelete(id) ;
+
+    res.status(200).json({
+        success:true,
+        message:"Listing deleted successfully"
+    }) ;
+} ;
