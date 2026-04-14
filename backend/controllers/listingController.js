@@ -35,3 +35,27 @@ module.exports.createListing = async(req , res)=>{
         message:"listing created successfully"
     }) ;
 } ;
+
+module.exports.updateListing = async(req , res)=>{
+    let {id} = req.params ;
+    const listing = await Listing.findByIdAndUpdate( id , {...req.body} , {returnDocument: 'after' , runValidators:true}) ;
+
+    if(! listing){
+        throw new ExpressError(404 , "Listing not found in database to update") ;
+    }
+
+    if(typeof req.file !== "undefined"){
+        let url = req.file.path ;
+        let filename = req.file.filename ;
+
+        listing.image = { url , filename } ;
+        await listing.save() ;
+    }
+
+    res.status(200).json({
+        success:true ,
+        message:"listing updated successfully" ,
+        data:listing 
+    }) ;
+
+} ;
