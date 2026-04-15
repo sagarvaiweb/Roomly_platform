@@ -28,7 +28,7 @@ module.exports.showListing = async(req ,res)=>{
 } ;
 
 module.exports.createListing = async(req , res)=>{
-    const newListing = new Listing(req.body.listing) ;
+    const newListing = new Listing(req.body) ;
     await newListing.save() ;
     res.status(200).json({
         success:true ,

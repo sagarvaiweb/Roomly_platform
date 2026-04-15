@@ -7,6 +7,7 @@ const mongoose = require("mongoose") ;
 const cors = require("cors") ;
 const ExpressError = require("./utils/ExpressError") ;
 const listingRouter = require("./routes/listingRouter") ;
+const reviewRouter = require("./routes/reviewRouter") ;
 
 // app initialization and variables
 const app = express() ;
@@ -21,6 +22,7 @@ app.use(express.urlencoded({extended:true })) ;
 
 // Routes
 app.use("/listings" , listingRouter) ;
+app.use("/listings/:id/reviews" , reviewRouter ) ;
 
 // 404 handler
 app.use((req , res , next)=>{
