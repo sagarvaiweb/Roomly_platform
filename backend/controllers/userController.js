@@ -1,14 +1,15 @@
 const User = require("../Models/UserModel") ;
 const bcrypt = require("bcryptjs") ;
+const jwt = require("jsonwebtoken") ;
 const ExpressError = require("../utils/ExpressError");
 
 
 module.exports.signUp = async(req , res)=>{
     const { username , email , password } = req.body ;
-    
+
     const existingUser = await User.findOne({email}) ;
     if(existingUser){
-        throw new ExpressError(404 , "User with this email already exists")
+        throw new ExpressError(409 , "User already exists") ;
     }
 
     const hashedPassword = await bcrypt.hash(password , 10) ;
@@ -22,3 +23,19 @@ module.exports.signUp = async(req , res)=>{
     }) ;
 } ;
 
+
+module.exports.login = async(req , res)=>{
+    const { email , password } = req.body ;
+
+    const existingUser = await User.findOne({email}) ;
+
+    if(!existingUser || !(await bcrypt.compare(password , existingUser.password))){
+        throw new ExpressError(401 , "Invalid credentials") ;
+    }
+
+    const token = jwt.sign({id:existingUser._id} , process.env.JWT_SECRET , {expiresIn:"1h"}) ;
+    res.status(200).json({
+        token:token ,
+        message:"Logged in successfully"
+    }) ;
+} ;
