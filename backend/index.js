@@ -8,6 +8,7 @@ const cors = require("cors") ;
 const ExpressError = require("./utils/ExpressError") ;
 const listingRouter = require("./routes/listingRouter") ;
 const reviewRouter = require("./routes/reviewRouter") ;
+const authRouter = require("./routes/userRouter") ;
 
 // app initialization and variables
 const app = express() ;
@@ -23,6 +24,7 @@ app.use(express.urlencoded({extended:true })) ;
 // Routes
 app.use("/listings" , listingRouter) ;
 app.use("/listings/:id/reviews" , reviewRouter ) ;
+app.use("/auth" , authRouter ) ;
 
 // 404 handler
 app.use((req , res , next)=>{
