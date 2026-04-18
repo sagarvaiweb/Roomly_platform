@@ -9,4 +9,7 @@ router.post("/signup" , wrapAsync( authControllers.signUp )) ;
 // Login route
 router.post("/login" , wrapAsync( authControllers.login )) ;
 
+// Profile update route
+router.put("/update" , wrapAsync( authControllers.updateProfile )) ;
+
 module.exports = router ;

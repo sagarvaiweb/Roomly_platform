@@ -39,3 +39,19 @@ module.exports.login = async(req , res)=>{
         message:"Logged in successfully"
     }) ;
 } ;
+
+module.exports.updateProfile = async(req , res)=>{
+    const id = req.user.id ;
+    const { username , image } = req.body ;
+    const updatedUser = await User.findByIdAndUpdate(id , {username , image} , {returnDocument:"after", runValidators:true}) ;
+
+    if(!updatedUser){
+        throw new ExpressError(404 , "User not found") ;
+    }
+
+    res.status(200).json({
+        success:true,
+        message:"Profile updated successfully",
+        user:updatedUser
+    }) ;
+} ;

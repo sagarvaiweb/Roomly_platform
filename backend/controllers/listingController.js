@@ -28,8 +28,15 @@ module.exports.showListing = async(req ,res)=>{
 } ;
 
 module.exports.createListing = async(req , res)=>{
+    const url = req.file.path ;
+    const filename = req.file.filename ;
+
     const newListing = new Listing(req.body) ;
+    newListing.owner = req.user._id ;
+    newListing.image = {url , filename} ;
+
     await newListing.save() ;
+
     res.status(200).json({
         success:true ,
         message:"listing created successfully"
