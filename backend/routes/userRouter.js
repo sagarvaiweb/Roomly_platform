@@ -12,4 +12,7 @@ router.post("/login" , wrapAsync( authControllers.login )) ;
 // Profile update route
 router.put("/update" , wrapAsync( authControllers.updateProfile )) ;
 
+// Profile get route
+router.get("/profile" , wrapAsync( authControllers.getProfile )) ;
+
 module.exports = router ;

@@ -22,6 +22,10 @@ const userSchema = new Schema({
         type:String,
         enum:[ "user" , "host" , "admin" ] ,
         default: "user"
+    },
+    bio:{
+        type:String,
+        maxlength:50
     }
 }) ;
 

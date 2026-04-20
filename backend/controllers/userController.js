@@ -55,3 +55,21 @@ module.exports.updateProfile = async(req , res)=>{
         user:updatedUser
     }) ;
 } ;
+
+module.exports.getProfile = async(req , res)=>{
+    const id = req.user.id ;
+    const existingUser = await User.findById(id).select("-password") ;
+
+    if(!existingUser){
+       return res.status(404).json({
+            success:false,
+            message:"User not found",
+        }) ;
+    }
+
+    res.status(200).json({
+        success:true,
+        message:"Profile data fetched successfully ",
+        data:existingUser
+    }) ;
+} ;
