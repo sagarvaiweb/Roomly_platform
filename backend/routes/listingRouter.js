@@ -8,6 +8,9 @@ const listingControllers = require("../controllers/listingController") ;
 // index route
 router.get("/" , wrapAsync( listingControllers.index ) ) ;
 
+// MyListing route
+router.get("/me" , wrapAsync( listingControllers.myListing )) ;
+
 // showListing route
 router.get("/:id" , wrapAsync( listingControllers.showListing )) ;
 

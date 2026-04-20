@@ -13,6 +13,24 @@ module.exports.index =  async (req , res)=>{
     }) ;
 } ;
 
+module.exports.myListing = async(req , res)=>{
+    const id = req.user.id ;
+    const myListings = await Listing.find({owner:id}) ;
+
+    if(myListings.length === 0){
+        return res.status(200).json({
+            success:true,
+            message:"you haven't created any listings yet",
+            data:[]
+        }) ;
+    }
+
+    res.status(200).json({
+        success:true,
+        data:myListings
+    }) ;
+} ;
+
 module.exports.showListing = async(req ,res)=>{
      let {id} = req.params ;
      const listing = await Listing.findById(id) ;
@@ -32,7 +50,7 @@ module.exports.createListing = async(req , res)=>{
     const filename = req.file.filename ;
 
     const newListing = new Listing(req.body) ;
-    newListing.owner = req.user._id ;
+    newListing.owner = req.user.id ;
     newListing.image = {url , filename} ;
 
     await newListing.save() ;
