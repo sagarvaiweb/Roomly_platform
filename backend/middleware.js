@@ -30,12 +30,23 @@ const jwt = require("jsonwebtoken") ;
   const { error } = listingJoi.validate(req.body) ;
 
   if(error){
-    let errMsg = error.details.map((el)=> el.message).join(",") ;
+    const errMsg = error.details.map((el)=> el.message).join(",") ;
     throw new ExpressError(400 , errMsg) ;
   }
 
   next() ;
  } ;
 
+
+ module.exports.validateReview = (req , res , next)=>{
+  const { error } = reviewJoi.validate(req.body) ;
+
+  if(error){
+    const errMsg = error.details.map((el)=> el.message).join(",") ;
+    throw new ExpressError(401 , errMsg) ;
+  }
+
+  next() ;
+ } ;
 
 
