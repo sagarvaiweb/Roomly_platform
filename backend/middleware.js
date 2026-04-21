@@ -23,7 +23,19 @@ const jwt = require("jsonwebtoken") ;
     throw new ExpressError(403 , "Token is invalid or expired") ;    
    }
  }) ;
-    
+
+
+  
+ module.exports.validateListing = (req , res , next)=>{
+  const { error } = listingJoi.validate(req.body) ;
+
+  if(error){
+    let errMsg = error.details.map((el)=> el.message).join(",") ;
+    throw new ExpressError(400 , errMsg) ;
+  }
+
+  next() ;
+ } ;
 
 
 
