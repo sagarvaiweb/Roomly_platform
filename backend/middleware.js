@@ -43,10 +43,26 @@ const jwt = require("jsonwebtoken") ;
 
   if(error){
     const errMsg = error.details.map((el)=> el.message).join(",") ;
-    throw new ExpressError(401 , errMsg) ;
+    throw new ExpressError(400 , errMsg) ;
   }
 
   next() ;
  } ;
+
+
+ module.exports.isListingOwner = wrapAsync(async(req , res , next)=>{
+  const {id} = req.params ;
+  const listing = await Listing.findById(id) ;
+
+  if(! listing.owner.equals(req.user.id))
+
+    return  res.status(403).json({
+    success:false,
+    message:"you are not the owner of this listing"
+})
+
+next() ;
+
+ }) ;
 
 
