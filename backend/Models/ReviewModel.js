@@ -11,6 +11,10 @@
         type:Number,
         min:1,
         max:5
+    } ,
+    owner:{
+        type:Schema.Types.ObjectId ,
+        ref:"User"
     }
  } , {timestamps:{createdAt:true , updatedAt:false}}  // it will contain createdAt but not Updated field
 )  ;

@@ -15,7 +15,7 @@ module.exports.index =  async (req , res)=>{
 
 module.exports.myListing = async(req , res)=>{
     const id = req.user.id ;
-    const myListings = await Listing.find({owner:id}) ;
+    const myListings = await Listing.find({owner:id}).populate({ path:"reviews" , populate:{path:"owner"} }) ;
 
     if(myListings.length === 0){
         return res.status(200).json({
@@ -33,7 +33,7 @@ module.exports.myListing = async(req , res)=>{
 
 module.exports.showListing = async(req ,res)=>{
      let {id} = req.params ;
-     const listing = await Listing.findById(id) ;
+     const listing = await Listing.findById(id).populate("owner").populate({path:"reviews" , populate:{path:"owner"}}) ;
 
      if(!listing){
         throw new ExpressError(404 , "listing not found in database !") ;
