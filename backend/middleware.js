@@ -50,19 +50,36 @@ const jwt = require("jsonwebtoken") ;
  } ;
 
 
+
  module.exports.isListingOwner = wrapAsync(async(req , res , next)=>{
   const {id} = req.params ;
   const listing = await Listing.findById(id) ;
 
-  if(! listing.owner.equals(req.user.id))
+  if(! listing){
+    throw new ExpressError(404 , "Listing not found") ;
+  }
 
-    return  res.status(403).json({
-    success:false,
-    message:"you are not the owner of this listing"
-})
+  if(! listing.owner.equals(req.user.id)){
+    throw new ExpressError(403 , "you are not the author of this listing") ;
+  }
 
-next() ;
+  next() ;
+}) ;
 
- }) ;
 
+module.exports.isReviewOwner = wrapAsync(async(req , res , next)=>{
+  const {id , reviewId} = req.params ;
+  const review = await Review.findById(reviewId) ;
+
+  if(! review){
+    throw new ExpressError(404 , "review not found") ;
+  }
+
+  if(! review.owner.equals(req.user.id)){
+    throw new ExpressError(403 , "you are not the author of this review") ;
+  }
+
+  next() ;
+}) ;
+ 
 
