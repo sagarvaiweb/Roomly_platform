@@ -1,4 +1,4 @@
-const { listingJoi , reviewJoi } = require("./schema") ;
+const { listingJoi , reviewJoi, userSignupJoi, userProfileUpdateJoi } = require("./schema") ;
 const Listing = require("./Models/ListingModel") ;
 const Review = require("./Models/ReviewModel") ;
 const ExpressError = require("./utils/ExpressError") ;
@@ -82,4 +82,25 @@ module.exports.isReviewOwner = wrapAsync(async(req , res , next)=>{
   next() ;
 }) ;
  
+module.exports.validateSignUp = (req , res , next)=>{
+  const {error} = userSignupJoi.validate(req.body) ;
+
+  if(error){
+    const errMsg = error.details.map((el)=> el.message).join(",") ;
+    throw new ExpressError(400 , errMsg) ;
+  }
+  
+  next() ;
+} ;
+
+module.exports.validateProfileUpdate = (req , res , next)=>{
+  const {error} = userProfileUpdateJoi.validate(req.body) ;
+
+  if(error){
+    const errMsg = error.details.map((el)=> el.message).join(",") ;
+    throw new ExpressError(400 , errMsg) ;
+  }
+
+  next() ;
+} ;
 
