@@ -1,4 +1,4 @@
-const { listingJoi , reviewJoi, userSignupJoi, userProfileUpdateJoi } = require("./schema") ;
+const { listingJoi , reviewJoi, userSignupJoi, userProfileUpdateJoi, listingUpdateJoi } = require("./schema") ;
 const Listing = require("./Models/ListingModel") ;
 const Review = require("./Models/ReviewModel") ;
 const ExpressError = require("./utils/ExpressError") ;
@@ -35,6 +35,17 @@ const jwt = require("jsonwebtoken") ;
   }
 
   next() ;
+ } ;
+
+ module.exports.validateUpdateListing = (req , res , next)=>{
+   const {error} = listingUpdateJoi.validate(req.body) ;
+
+   if(error){
+    const errMsg = error.details.map((el)=> el.message).join(",") ;
+    throw new ExpressError(400 , errMsg) ;
+   }
+
+   next() ;
  } ;
 
 

@@ -10,6 +10,16 @@ module.exports.listingJoi = Joi.object({
     country:Joi.string().required(),
 }) ;
 
+module.exports.listingUpdateJoi = Joi.object({
+    title:Joi.string(),
+    description:Joi.string(),
+    image:Joi.string(),
+    price:Joi.number().min(0),
+    location:Joi.string(),
+    city:Joi.string(),
+    country:Joi.string(),
+}) ;
+
 module.exports.reviewJoi = Joi.object({
     comment:Joi.string().required(),
     rating:Joi.number().min(1).max(5).required(),
