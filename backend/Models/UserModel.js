@@ -25,7 +25,7 @@ const userSchema = new Schema({
     },
     bio:{
         type:String,
-        maxlength:50
+        maxlength:300
     }
 }) ;
 
