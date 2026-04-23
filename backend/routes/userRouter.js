@@ -2,13 +2,13 @@ const express = require("express") ;
 const router = express.Router({mergeParams:true}) ;
 const wrapAsync = require("../utils/wrapAsync");
 const authControllers = require("../controllers/userController") ;
-const { validateSignUp, validateProfileUpdate, isLoggedIn } = require("../middleware");
+const { validateSignUp, validateProfileUpdate, isLoggedIn, loginLimiter } = require("../middleware");
 
 // SignUp route
 router.post("/signup" , validateSignUp , wrapAsync( authControllers.signUp )) ;
 
 // Login route
-router.post("/login" , wrapAsync( authControllers.login )) ;
+router.post("/login" , loginLimiter, wrapAsync( authControllers.login )) ;
 
 // Profile update route
 router.put("/update" , isLoggedIn, validateProfileUpdate, wrapAsync( authControllers.updateProfile )) ;

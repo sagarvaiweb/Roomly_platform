@@ -4,6 +4,7 @@ const Review = require("./Models/ReviewModel") ;
 const ExpressError = require("./utils/ExpressError") ;
 const wrapAsync = require("./utils/wrapAsync") ;
 const jwt = require("jsonwebtoken") ;
+const rateLimit = require("express-rate-limit") ;
 
  module.exports.isLoggedIn = wrapAsync(async(req , res , next)=>{
    const authHeader = req.headers.authorization ;
@@ -115,3 +116,18 @@ module.exports.validateProfileUpdate = (req , res , next)=>{
   next() ;
 } ;
 
+
+module.exports.loginLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minute "window"
+    max: 5, // Limit each IP to 5 login attempts per window
+    
+    // The response sent when the limit is reached
+    handler: (req, res, next) => {
+        throw new ExpressError(429, "Too many login attempts. Please try again in 15 minutes.");
+    },
+
+    // Standard headers: true 
+    standardHeaders: 'draft-7', // Returns RateLimit-Limit, RateLimit-Remaining, and RateLimit-Reset
+    legacyHeaders: false, // Disable X-RateLimit headers (older style)
+    
+});
