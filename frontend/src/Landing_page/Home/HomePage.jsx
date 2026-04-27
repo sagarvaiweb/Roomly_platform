@@ -1,9 +1,27 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { allListings } from '../../Data/dummy';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import axios from 'axios' ;
 
 function HomePage() {
-  
+   const [allListings , setAllListings ] = useState([]) ;
+
+   useEffect(()=>{
+    const fetchListings = async()=>{
+       try{
+         const {data : { data:listings }} = await axios.get("http://localhost:3000/listings") ;
+         setAllListings(listings) ;
+       }
+       catch(err){
+        console.error("listings not fetched from the database") ;
+       }
+    }
+
+    fetchListings() ;
+   } , [])
+
     return ( <>
     <ul className='cardWrap'>
         {
