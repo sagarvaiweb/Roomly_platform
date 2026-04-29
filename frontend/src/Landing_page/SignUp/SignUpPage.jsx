@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios' ;
 
 
 function SignUpPage() {
@@ -11,9 +12,19 @@ function SignUpPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(form);
+    try{
+
+      const response = await axios.post("http://localhost:3000/auth/signup" , form ) ;
+      
+        navigate("/login") ;
+        console.log(response.data.message ) ;
+      
+    }
+    catch(err){
+      console.error(err.response?.data?.message || err.message) ;
+    }
   };
 
   return (
