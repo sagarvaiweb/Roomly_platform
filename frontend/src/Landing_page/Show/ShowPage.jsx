@@ -1,15 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import { allListings } from '../../Data/dummy';
 import Button from '../CommonComponents/CommonButton';
+import axios from 'axios' ;
 
 
 function ShowPage() {
     const {id} = useParams() ;
-    const listing = allListings.find( item => item._id === id) ;
-    if(!listing){
-        return <h1>Listing is not found</h1>
-    }
+    const [listing , setListing] = useState({ }) ;
+
+    useEffect(()=>{
+      const fetchListing = async()=>{
+        const {data: {data:listing}} = await axios.get(`http://localhost:3000/listings/${id}`) ;
+        setListing(listing) ;
+      }
+
+      fetchListing() ;
+    } , [id]) ;
+    
     return ( <>
      <div className="container showPage_div col-lg-6"> 
             <h2 className='mt-5'>{listing.title}</h2>
@@ -37,7 +45,7 @@ function ShowPage() {
                 <form action="" noValidate className="needs-validation">
                  <fieldset className="starability-slot">
                     <legend>Rating:</legend>
-                    <input type="radio" id="no-rate" className="input-no-rate" name="rating" value="0" checked aria-label="No rating." />
+                    <input type="radio" id="no-rate" className="input-no-rate" name="rating" value="0" defaultChecked aria-label="No rating." />
                     <input type="radio" id="first-rate1" name="rating" value="1" />
                     <label htmlFor="first-rate1" title="Terrible">1 star</label>
                     <input type="radio" id="first-rate2" name="rating" value="2" />
@@ -55,31 +63,38 @@ function ShowPage() {
                       <textarea className="form-control" name="comment" placeholder="Leave your experience......" id="comment" rows="4" required ></textarea>
                       <div className="invalid-feedback">Add some valid comments</div>
                   </div>
-                      <Button clsName="btn btn-dark" btnText="Add Review" />
+                      <Button clsName="btn btn-dark mb-4" btnText="Add Review" />
                 </form>
             </div>
               
-     
+
+            { listing.reviews && listing.reviews.length > 0  && 
+            (
             <div className="Reviews mt-5">
               <hr />
                <h5 className='mt-5 mb-3'><b>All Reviews</b></h5>
-              for(1){
-                <div className="card col-5 mb-4 ms-1">
+
+
+              {listing.reviews?.map((review)=>{
+                return(
+                <div className="card col-5 mb-4 ms-1" key={review._id}>
     
                  <div className="card-body">
-                   <h5 className="card-title"><b>@review.owner.username</b></h5>
-                   <p className="starability-result ms-2" data-rating="review.rating" > </p> 
-                   <p className="card-text ms-2">review.comment</p>
+                   <h5 className="card-title"><b>@{review.owner}</b></h5>
+                   <p className="starability-result ms-2" data-rating={review.rating} > </p> 
+                   <p className="card-text ms-2">{review.comment}</p>
                  
                  </div>
                
                    <Button clsName="btn btn-dark mb-2 w-50 ms-3"  btnText="Delete"/>
                 
-                </div>
+                </div> )
 
-                  } 
+              })}
+                
     
-            </div>
+            </div> )
+            }
                    
      </div>
     </> );
