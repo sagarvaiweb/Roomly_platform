@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios' ;
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -12,9 +13,17 @@ function LoginPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log("Login Data:", form);
+    try{
+      const response = await axios.post("http://localhost:3000/auth/login" , form) ;
+      localStorage.setItem( "token" , response.data.token) ; 
+      navigate("/") ;
+      console.log("you successfully loggedIn") ;
+    }
+    catch(err){
+      console.error(err.response?.data?.message || err.message) ;
+    }
   };
 
   return (
