@@ -1,25 +1,29 @@
 import React from 'react'
 import ListingForm from '../CommonComponents/ListingForm';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 function CreateListingPage() {
-    //  const { listings, setListings } = useContext(ListingsContext);
+   
      const navigate = useNavigate() ;
+     
+     const handleCreate = async (formData) => {
+      const token = localStorage.getItem("token") ;
 
-     const handleCreate = (formData) => {
-    //  const newListing = {
-    //   _id: Date.now(),
-    //   title: formData.title,
-    //   description: formData.description,
-    //   price: formData.price,
-    //   location: formData.location,
-    //   country: formData.country,
-    //   image: { url: formData.image },
-    // };
+      try{
+        const response = await axios.post("http://localhost:3000/listings/create" , formData , {
+          headers:{
+            Authorization: `Bearer ${token}` 
+          }
+        }) ;
 
-    // setListings([...listings, newListing]);
-    navigate("/");
+        navigate("/") ;
+        console.log(response.data.message) ;
+      }
+      catch(err){
+        console.error(err.response?.data?.message || err.message) ;
+      }
   };
 
     return ( <>
