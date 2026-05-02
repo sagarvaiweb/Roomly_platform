@@ -13,12 +13,18 @@ module.exports.listingJoi = Joi.object({
 module.exports.listingUpdateJoi = Joi.object({
     title:Joi.string(),
     description:Joi.string(),
-    image:Joi.string(),
+    image:Joi.alternatives().try(
+        Joi.string().allow("", null), 
+        Joi.object({
+            url: Joi.string().required(),
+            filename: Joi.string().required()
+        })
+    ).optional(),
     price:Joi.number().min(0),
     location:Joi.string(),
     city:Joi.string(),
     country:Joi.string(),
-}) ;
+}).unknown(true) ;
 
 module.exports.reviewJoi = Joi.object({
     comment:Joi.string().required(),
