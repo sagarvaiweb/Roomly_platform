@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { allListings } from '../../Data/dummy';
 import Button from '../CommonComponents/CommonButton';
 import axios from 'axios' ;
@@ -7,6 +7,7 @@ import axios from 'axios' ;
 
 function ShowPage() {
     const {id} = useParams() ;
+    const navigate = useNavigate() ;
     const [listing , setListing] = useState({ }) ;
 
     useEffect(()=>{
@@ -18,6 +19,24 @@ function ShowPage() {
       fetchListing() ;
     } , [id]) ;
     
+    const handleListingDelete = async()=>{
+      const token = localStorage.getItem("token") ;
+     
+      try{
+
+        const response = await axios.delete(`http://localhost:3000/listings/${id}` , { 
+          headers:{
+            Authorization: `Bearer ${token}` 
+          }
+        }) ;
+        navigate("/") ;
+        console.log(response?.data?.message) ;
+      }
+      catch(err){
+        console.error(err.response?.data.message || err.message) ; 
+      }
+    } ;
+
     return ( <>
      <div className="container showPage_div col-lg-6"> 
             <h2 className='mt-5'>{listing.title}</h2>
@@ -29,6 +48,7 @@ function ShowPage() {
             <div className='text-body mt-4 col-lg-9'>
                   <p>{listing.description}</p>
                   <p>Rs {listing.price}/Month</p>
+                  <p>{listing.city}</p>
                   <p>{listing.location}</p>
                   <p>{listing.country}</p>
             </div>
@@ -36,7 +56,7 @@ function ShowPage() {
             <div className="btn_div mb-5 mt-5">
                 <Link to={`/listings/${listing._id}/edit`} ><Button clsName="update_btn" btnText="Update" /></Link>
                 <Button clsName="book_btn" btnText="Book now" />
-                <Button clsName="delete_btn" btnText="Delete" />
+                <Button clsName="delete_btn" btnText="Delete" onClick={handleListingDelete} /> 
             </div>
 
             <div className='ratingForm'>
