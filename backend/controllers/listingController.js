@@ -46,18 +46,42 @@ module.exports.showListing = async(req ,res)=>{
 } ;
 
 module.exports.createListing = async(req , res)=>{
-    const url = req.file.path ;
-    const filename = req.file.filename ;
 
-    const newListing = new Listing(req.body) ;
-    newListing.owner = req.user.id ;
-    newListing.image = {url , filename} ;
+   const {title, description, price, city , location, country} = req.body ;
+   let url ;
+   let filename ;
 
-    await newListing.save() ;
+    if(req.file){
+
+         url = req.file.path ;
+         filename = req.file.filename ;
+    }
+    else if(req.body.image && typeof req.body.image === "string"){
+         url = req.body.image;
+         filename = "roomly_image" ;
+    }
+    else{
+        throw new ExpressError(400 , "provide image for your listing") ;
+    }
+
+    const newListing = new Listing({
+        title,
+        description,
+        price,
+        city,
+        location,
+        country,
+        owner: req.user.id,
+        image: {url , filename},
+    }) ;
+   
+
+    const createdListing = await newListing.save() ;
 
     res.status(200).json({
         success:true ,
-        message:"listing created successfully"
+        message:"listing created successfully",
+        data:createdListing
     }) ;
 } ;
 
