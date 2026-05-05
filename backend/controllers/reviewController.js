@@ -6,7 +6,8 @@ module.exports.createReview = async(req , res)=>{
     let {id} = req.params ;
     const listing = await Listing.findById(id) ;
     const newReview = new Review(req.body) ;
-
+    
+    newReview.owner = req.user.id ;
     listing.reviews.push(newReview) ;
     await newReview.save() ;
     await listing.save() ;

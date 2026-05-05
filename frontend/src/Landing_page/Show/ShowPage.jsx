@@ -9,16 +9,53 @@ function ShowPage() {
     const {id} = useParams() ;
     const navigate = useNavigate() ;
     const [listing , setListing] = useState({ }) ;
+    
+    const fetchListing = async()=>{
+      try{
+        const response = await axios.get(`http://localhost:3000/listings/${id}`) ;
+        const fetchedListing =  response.data.data
+        setListing(fetchedListing) ;
+        console.log(response?.data.message) ;
+      }
+      catch(err){
+        console.error(err.response?.data.message || err.message) ;
+      }
+    }
 
     useEffect(()=>{
-      const fetchListing = async()=>{
-        const {data: {data:listing}} = await axios.get(`http://localhost:3000/listings/${id}`) ;
-        setListing(listing) ;
-      }
-
-      fetchListing() ;
-    } , [id]) ;
     
+       fetchListing() ;
+     } , [id]) ;
+        
+
+    const [reviewData , setReviewData] = useState({ rating:"1" , comment:"" }) ;
+    const handleInputChange = (e)=>{
+      setReviewData({...reviewData , [e.target.name]:e.target.value}) ;
+    } ;
+
+    const handleReviewSubmit = async(e)=>{
+      e.preventDefault() ;
+      const token = localStorage.getItem("token") ;
+      try{
+
+        const response = await axios.post(`http://localhost:3000/listings/${id}/reviews` , reviewData , {
+          headers:{
+            Authorization: `Bearer ${token}` 
+          }
+        }) ;
+
+        console.log(response?.data.message) ;
+
+        fetchListing() 
+        setReviewData({ }) ; // clear the local state
+        e.target.reset() ; // clear the form field in UI
+
+      }
+      catch(err){
+        console.error(err.response?.data.message || err.message) ;
+      }
+    } ;
+
     const handleListingDelete = async()=>{
       const token = localStorage.getItem("token") ;
      
@@ -30,8 +67,8 @@ function ShowPage() {
           }
         }) ;
         navigate("/") ;
-        console.log(response?.data?.message) ;
-      }
+        console.log(response?.data.message) ; 
+      } 
       catch(err){
         console.error(err.response?.data.message || err.message) ; 
       }
@@ -62,8 +99,8 @@ function ShowPage() {
             <div className='ratingForm'>
                 <hr />
                 <h2 className='mb-4 mt-4'>Leave a Review</h2>
-                <form action="" noValidate className="needs-validation">
-                 <fieldset className="starability-slot">
+                <form onSubmit={handleReviewSubmit} noValidate className="needs-validation">
+                 <fieldset className="starability-slot" onChange={handleInputChange}>
                     <legend>Rating:</legend>
                     <input type="radio" id="no-rate" className="input-no-rate" name="rating" value="0" defaultChecked aria-label="No rating." />
                     <input type="radio" id="first-rate1" name="rating" value="1" />
@@ -80,7 +117,7 @@ function ShowPage() {
 
                    <div  className="mb-4">
                       <label htmlFor="comment" className="form-label mt-4 fs-5">Comment:</label> <br />
-                      <textarea className="form-control" name="comment" placeholder="Leave your experience......" id="comment" rows="4" required ></textarea>
+                      <textarea className="form-control" name="comment" onChange={handleInputChange} placeholder="Leave your experience......" id="comment" rows="4" required ></textarea>
                       <div className="invalid-feedback">Add some valid comments</div>
                   </div>
                       <Button clsName="btn btn-dark mb-4" btnText="Add Review" />
@@ -94,15 +131,17 @@ function ShowPage() {
               <hr />
                <h5 className='mt-5 mb-3'><b>All Reviews</b></h5>
 
-
+            <div  className='reviewWrapper d-flex flex-wrap gap-3 '>        
               {listing.reviews?.map((review)=>{
                 return(
-                <div className="card col-5 mb-4 ms-1" key={review._id}>
+        
+                <div className="card col-lg-5 col-sm-12 mb-4 ms-1" key={review._id}>
     
                  <div className="card-body">
-                   <h5 className="card-title"><b>@{review.owner}</b></h5>
+                   <h5 className="card-title"><b>@{review.owner?.username}</b></h5>
                    <p className="starability-result ms-2" data-rating={review.rating} > </p> 
                    <p className="card-text ms-2">{review.comment}</p>
+                   <p className='card-date ms-2'> <b>CreatedAt: {new Date(review.createdAt).toLocaleDateString()} </b></p>
                  
                  </div>
                
@@ -111,6 +150,8 @@ function ShowPage() {
                 </div> )
 
               })}
+
+                </div>
                 
     
             </div> )
