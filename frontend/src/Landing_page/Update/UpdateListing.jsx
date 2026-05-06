@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ListingForm from '../CommonComponents/ListingForm';
 import { allListings } from '../../Data/dummy';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function UpdateListing() {
 
@@ -15,12 +16,13 @@ function UpdateListing() {
         const fetchListing = async ()=>{
             try{
 
-                const { data:{data : listing }} = await axios.get(`http://localhost:3000/listings/${id}`) ;
-                setListingToEdit(listing) ;
+                const response = await axios.get(`http://localhost:3000/listings/${id}`) ;
+                setListingToEdit(response?.data?.data) ;
+                toast.success(response?.data?.message) ;
                 
             }
             catch(err){
-                console.error(err.response?.data?.message || err.message) ;
+                toast.error(err.response?.data?.message || err.message) ;
             }
         }
 
@@ -38,10 +40,10 @@ function UpdateListing() {
          }) ;
 
          navigate(`/listings/${id}`);  // go to show page 
-         console.log(response.data.message) ;
+         toast.success(response?.data?.message) ;
      }
      catch(err){
-        console.error(err.response?.data?.message || err.message) ;
+        toast.error(err.response?.data?.message || err.message) ;
      }
     
   };

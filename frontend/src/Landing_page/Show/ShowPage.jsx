@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { allListings } from '../../Data/dummy';
 import Button from '../CommonComponents/CommonButton';
 import axios from 'axios' ;
+import { toast } from 'react-toastify';
 
 
 function ShowPage() {
@@ -18,7 +19,7 @@ function ShowPage() {
        
       }
       catch(err){
-        console.error(err.response?.data.message || err.message) ;
+        toast.error(err.response?.data?.message || err.message) ;
       }
     }
 
@@ -44,7 +45,7 @@ function ShowPage() {
           }
         }) ;
 
-        console.log(response?.data.message) ;
+        toast.success(response?.data?.message) ;
 
         fetchListing() 
         setReviewData({ rating:"1" , comment:"" }) ; // initialized the local state
@@ -52,7 +53,7 @@ function ShowPage() {
 
       }
       catch(err){
-        console.error(err.response?.data.message || err.message) ;
+        toast.error(err.response?.data?.message || err.message) ;
       }
     } ;
 
@@ -67,10 +68,10 @@ function ShowPage() {
           }
         }) ;
         navigate("/") ;
-        console.log(response?.data.message) ; 
+        toast.success(response?.data?.message) ; 
       } 
       catch(err){
-        console.error(err.response?.data.message || err.message) ; 
+        toast.error(err.response?.data?.message || err.message) ; 
       }
     } ;
 
@@ -84,15 +85,15 @@ function ShowPage() {
           }
         }) ;
         fetchListing() ;
-        console.log(response?.data.message) ;
+        toast.success(response?.data?.message) ;
       }
       catch(err){
-        console.error(err.response?.data.message || err.message) ;
+        toast.error(err.response?.data?.message || err.message) ;
       }
     }
 
     return ( <>
-     <div className="container showPage_div col-lg-8"> 
+     <div className="container showPage_div col-lg-6"> 
             <h2 className='mt-5'>{listing.title}</h2>
             <h4><i>Owned by: @ {listing.owner?.username}</i></h4>
 
@@ -153,7 +154,7 @@ function ShowPage() {
               {listing.reviews?.map((review)=>{
                 return(
         
-                <div className="card col-lg-4  col-md-4 col-sm-5 col-12 mb-4 ms-1" key={review._id}>
+                <div className="card col-lg-5 col-md-4 col-sm-5 col-10 mb-4 ms-1" key={review._id}>
     
                  <div className="card-body">
                    <h5 className="card-title"><b>@ {review.owner?.username}</b></h5>

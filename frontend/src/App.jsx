@@ -10,12 +10,14 @@ import UpdateListing from "./Landing_page/Update/UpdateListing";
 import SignUpPage from "./Landing_page/SignUp/SignUpPage";
 import LoginPage from "./Landing_page/Login/LoginPage";
 import ScrollToTop from "./GloComponents/ScrollToTop";
+import Toast from "./Landing_page/CommonComponents/Toast";
 function App() {
   
 
   return (
     <>
     <ScrollToTop/>
+    <Toast/>
      <Routes>
      <Route element={<UserLayout/>}> 
      <Route path="/"  element={<HomePage/>}/>

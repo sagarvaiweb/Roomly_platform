@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios' ;
+import { toast } from "react-toastify";
 
 
 function SignUpPage() {
@@ -19,11 +20,11 @@ function SignUpPage() {
       const response = await axios.post("http://localhost:3000/auth/signup" , form ) ;
       
         navigate("/login") ;
-        console.log(response.data.message ) ;
+        toast.success(response?.data?.message);
       
     }
     catch(err){
-      console.error(err.response?.data?.message || err.message) ;
+      toast.error(err.response?.data?.message || err.message) ;
     }
   };
 
