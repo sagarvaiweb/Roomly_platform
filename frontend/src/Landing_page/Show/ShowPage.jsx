@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { allListings } from '../../Data/dummy';
 import Button from '../CommonComponents/CommonButton';
 import axios from 'axios' ;
 import { toast } from 'react-toastify';
+import { confirmAction } from '../../utils/alert';
 
 
 function ShowPage() {
@@ -58,6 +58,13 @@ function ShowPage() {
     } ;
 
     const handleListingDelete = async()=>{
+      const isConfirmed = await confirmAction({
+        title: "Delete Listing?",
+        text: "This will permanently remove your property listing."
+      }) ;
+
+      if(! isConfirmed) return   ;
+
       const token = localStorage.getItem("token") ;
      
       try{
@@ -76,6 +83,13 @@ function ShowPage() {
     } ;
 
     const handleDestroyReview = async(reviewId)=>{
+      const isConfirmed = await confirmAction({
+        title: "Delete Review?",
+        text: "Remove this review from the listing?"
+      }) ;
+
+      if(! isConfirmed) return ;
+
       const token = localStorage.getItem("token") ;
     
       try{

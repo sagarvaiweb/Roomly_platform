@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import ListingForm from '../CommonComponents/ListingForm';
-import { allListings } from '../../Data/dummy';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 

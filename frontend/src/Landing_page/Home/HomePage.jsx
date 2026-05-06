@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { allListings } from '../../Data/dummy';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios' ;
