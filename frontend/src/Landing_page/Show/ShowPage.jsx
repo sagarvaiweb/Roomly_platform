@@ -13,9 +13,9 @@ function ShowPage() {
     const fetchListing = async()=>{
       try{
         const response = await axios.get(`http://localhost:3000/listings/${id}`) ;
-        const fetchedListing =  response.data.data
+        const fetchedListing =  response.data.data ;
         setListing(fetchedListing) ;
-        console.log(response?.data.message) ;
+       
       }
       catch(err){
         console.error(err.response?.data.message || err.message) ;
@@ -47,7 +47,7 @@ function ShowPage() {
         console.log(response?.data.message) ;
 
         fetchListing() 
-        setReviewData({ }) ; // clear the local state
+        setReviewData({ rating:"1" , comment:"" }) ; // initialized the local state
         e.target.reset() ; // clear the form field in UI
 
       }
@@ -74,12 +74,30 @@ function ShowPage() {
       }
     } ;
 
+    const handleDestroyReview = async(reviewId)=>{
+      const token = localStorage.getItem("token") ;
+    
+      try{
+        const response = await axios.delete(`http://localhost:3000/listings/${id}/reviews/${reviewId}` , {
+          headers:{
+            Authorization: `Bearer ${token}`
+          }
+        }) ;
+        fetchListing() ;
+        console.log(response?.data.message) ;
+      }
+      catch(err){
+        console.error(err.response?.data.message || err.message) ;
+      }
+    }
+
     return ( <>
-     <div className="container showPage_div col-lg-6"> 
+     <div className="container showPage_div col-lg-8"> 
             <h2 className='mt-5'>{listing.title}</h2>
+            <h4><i>Owned by: @ {listing.owner?.username}</i></h4>
 
             <div className="image_div mt-4">
-            <img className='show_image' src={listing?.image?.url} alt="show_image" />    
+            <img className='show_image' src={listing?.image?.url} alt="Roomly_image" />    
             </div>
 
             <div className='text-body mt-4 col-lg-9'>
@@ -135,17 +153,17 @@ function ShowPage() {
               {listing.reviews?.map((review)=>{
                 return(
         
-                <div className="card col-lg-5 col-sm-12 mb-4 ms-1" key={review._id}>
+                <div className="card col-lg-4  col-md-4 col-sm-5 col-12 mb-4 ms-1" key={review._id}>
     
                  <div className="card-body">
-                   <h5 className="card-title"><b>@{review.owner?.username}</b></h5>
+                   <h5 className="card-title"><b>@ {review.owner?.username}</b></h5>
                    <p className="starability-result ms-2" data-rating={review.rating} > </p> 
                    <p className="card-text ms-2">{review.comment}</p>
                    <p className='card-date ms-2'> <b>CreatedAt: {new Date(review.createdAt).toLocaleDateString()} </b></p>
                  
                  </div>
                
-                   <Button clsName="btn btn-dark mb-2 w-50 ms-3"  btnText="Delete"/>
+                   <Button clsName="btn btn-dark mb-2 w-50 ms-3"  btnText="Delete" onClick={()=>handleDestroyReview(review._id)}/>
                 
                 </div> )
 
